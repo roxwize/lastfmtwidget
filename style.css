@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Mono", "Courier New", monospace;
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  font-style: italic;
+}
+
+#info {
+  position: absolute;
+  font-size: 10pt;
+  top: 0.2em;
+  left: 6em;
+}
+
+.deemp {
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 8pt;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #db7d7d;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: #9f2020;
+  }
+}

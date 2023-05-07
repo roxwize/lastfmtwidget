@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img alt="(loading...)" id="cover" />
+    <span id="info"></span>
+    <script>
+      const USER = "thekillective";
+
+      const albumCover = document.getElementById("cover");
+      const infoElemnt = document.getElementById("info");
+
+      window.onload = async () => {
+        const d = await GetCurrentlyPlaying();
+        const t = d["@attr"]?.nowplaying
+          ? "just now"
+          : GetTime(new Date(d.date["#text"] + " UTC"));
+        infoElemnt.innerHTML = `<a href="https://www.last.fm/user/${USER}" target="_blank">${USER}</a> is playing<br/><strong>${d.name}</strong> by ${d.artist["#text"]}<br/><span class="deemp">Last updated ${t}</span>`;
+        albumCover.src = d.image[1]["#text"];
+      };
+
+      async function GetCurrentlyPlaying() {
+        const d = await fetch("http://127.0.0.1:3000/get?user=" + USER);
+        const j = await d.json();
+        return j.results;
+      }
+
+      function GetTime(d) {
+        return `${d.toDateString()} ${d
+          .toLocaleTimeString()
+          .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")} (${
+          d.toLocaleTimeString("en-us", { timeZoneName: "short" }).split(" ")[2]
+        })`;
+      }
+    </script>
+  </body>
+</html>
